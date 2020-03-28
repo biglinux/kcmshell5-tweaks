@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+if [ "$(echo "$*" | grep "kcm_networkmanagement.desktop")" != "" ]; then
+
+    if [ "$(echo "$*" | grep "Uuid")" != "" ]; then
+        exec nm-connection-editor --edit=$(echo "$*" | sed 's|.*Uuid=||g')
+    else
+        exec nm-connection-editor
+    fi
+    
+else
+
+    exec kcmshell5.distrib ${1+"$@"}
+
+fi

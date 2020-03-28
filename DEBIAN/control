@@ -1,0 +1,10 @@
+Package: kcmshell5-tweaks
+Version: 1.0.0-1big1
+Depends: kde-cli-tools, network-manager-gnome
+Architecture: all
+Maintainer: Bruno Goncalves <www.biglinux.com.br>
+Section: admin
+Priority: optional
+Installed-Size:172
+Description: Tweaks to kcmshell, like change network-manager connection editor to use gtk version
+

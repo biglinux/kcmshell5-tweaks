@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+package_name=kcmshell5-tweaks
+mkdir -p "/usr/share/dpkgdivert/kcmshell5-tweaks"
+case "$1" in
+  install)
+    dpkg-divert --package "$package_name" --divert "/usr/bin/kcmshell5.distrib" --rename "/usr/bin/kcmshell5"
+    ;;
+  upgrade)
+if [ "$(dpkg-divert --list "/usr/bin/kcmshell5")" = "" ]
+then
+    dpkg-divert --package "$package_name" --divert "/usr/bin/kcmshell5.distrib" --rename "/usr/bin/kcmshell5"
+fi
+;;
+esac
+exit 0
