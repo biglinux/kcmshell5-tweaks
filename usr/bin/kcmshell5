@@ -1,14 +1,25 @@
 #!/bin/bash
 
+if [ "$(echo "$*" | grep "kcm_networkmanagement")" != "" ]; then
 
-if [ "$(echo "$*" | grep "kcm_networkmanagement.desktop")" != "" ]; then
 
-    if [ "$(echo "$*" | grep "Uuid")" != "" ]; then
-        exec nm-connection-editor --edit=$(echo "$*" | sed 's|.*Uuid=||g')
+$(yad --form --text $"\nEscolha o configurador da conexão:\n" \
+--button=$"Simples":1 \
+--button=$"Avançado":2 \
+--center --undecorated --on-top --borders=50 --title=$"Configurações de rede" \
+--window-icon="emblem-warning")
+
+yadresult=$?
+
+    if [ "$yadresult" = "2" ]; then
+        kcmshell5.distrib ${1+"$@"}
     else
-        exec nm-connection-editor
+        if [ "$(echo "$*" | grep "Uuid")" != "" ]; then
+            exec nm-connection-editor --edit=$(echo "$*" | sed 's|.*Uuid=||g')
+        else
+            exec nm-connection-editor
+        fi
     fi
-    
 else
 
     kcmshell5.distrib ${1+"$@"}
